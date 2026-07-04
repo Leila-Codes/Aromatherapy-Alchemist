@@ -1,0 +1,207 @@
+Table oils {
+  id serial [primary key]
+  name varchar [not null]
+}
+
+Table constituents {
+  id serial [primary key]
+  name varchar [not null]
+}
+
+Table oil_content {
+  constituent_id serial [not null]
+  oil_id serial [not null]
+  concentration float [not null]
+}
+
+Table effect_categories {
+  category_id serial [primary key]
+  effect_type text [not null]
+  category varchar [not null]
+}
+
+Table category_scores {
+  category_id serial [not null]
+  constituent_id serial [not null]
+  score integer [not null]
+}
+
+Ref: oil_content.constituent_id > constituents.id
+Ref: oil_content.oil_id > oils.id
+
+Ref: category_scores.category_id - effect_categories.category_id
+Ref: category_scores.constituent_id > constituents.id
+
+Records oils(id, name) {
+    1, 'Eucalyptus'
+    2, 'Lavender'
+    3, 'Lemon'
+    4, 'Tea Tree'
+    5, 'Bergamot'
+    6, 'Frankincense'
+    7, 'Peppermint'
+    8, 'Rosemary'
+    9, 'Geranium'
+    10, 'Ylang Ylang'
+    11, 'Cedarwood'
+    12, 'Clary Sage'
+    13, 'Lemongrass'
+    14, 'Chamomile'
+    15, 'Cinnamon'
+    16, 'Cypress'
+    17, 'Grapefruit'
+    18, 'Patchouli'
+    19, 'Rose'
+    20, 'Sweet Orange'
+    21, 'Vetiver'
+}
+
+Records constituents(id, name) {
+    1, 'Linalool'
+    2, 'Sesquiterpenes'
+    3, '1,8-Cineole'
+    4, 'Menthol'
+    5, 'Cinnamaldehyde'
+    6, 'Menthol'
+    7, 'Cinnamaldehyde'
+    8, 'Terpinen‑4‑ol'
+    9, 'Limonene'
+    10, 'Citronellol'
+    11, 'Chamomile'
+    12, 'Patchoulol'
+    13, 'Khusimol'
+    14, 'Pinene'
+    15, 'Benzyl Acetate'
+    16, 'Phenylethyl alcohol'
+    17, 'Geraniol'
+    18, 'Camphor'
+    19, 'Cedrol'
+    20, 'Geranial'
+}
+
+Records oil_content(oil_id, constituent_id, concentration) {
+  // eucaplyptus (1,8-cineole 86%, limonene 2%)
+  1, 3, 0.86
+  1, 9, 0.02
+  // lavender (linalool 28% + linalyl acetate 51% = 79%, 1,8-cineole 3%)
+  2, 1, 0.79
+  2, 3, 0.03
+  // lemon (limonene 72%, pinene 13%)
+  3, 9, 0.72
+  3, 14, 0.13
+  // tea tree (terpinene-4-ol 40%)
+  4, 8, 0.40
+  // bergamot (limonene 81%, pinene 2%)
+  5, 9, 0.81
+  5, 14, 0.02
+  // frankincense (pinene 45%)
+  6, 14, 0.45
+  // peppermint (menthol+menthone 41%+23%=64%, 1,8-cineole 5%)
+  7, 6, 0.64
+  7, 3, 0.05
+  // rosemary (camphor 27%, 1,8-cineole 20%, limonene 4%)
+  8, 18, 0.27
+  8, 3, 0.20
+  8, 9, 0.04
+  // geranium (geraniol 28%, citronellol 24%, linalool 13%)
+  9, 17, 0.28
+  9, 10, 0.24
+  9, 1, 0.13
+  // ylang-ylang (benzyl acetate 29%, linalool 23%)
+  10, 15, 0.29
+  10, 1, 0.23
+  // cedarwood (cedrol 20%)
+  11, 19, 0.20
+  // clary sage (linalool 42%, geraniol 6%)
+  12, 1, 0.42
+  12, 17, 0.06
+  // lemongrass (geranial 75%, geraniol 3%)
+  13, 20, 0.75
+  13, 17, 0.03
+  // chamomile (khusimol 26%)
+  14, 13, 0.26
+  // cinammon (Cinnamaldehyde 75% + cinnamyl acetate 5% = 80%)
+  15, 7, 0.80
+  // cypress (pinene 49%, limonene 5%)
+  16, 14, 0.49
+  16, 9, 0.05
+  // grapefruit (limonene 93%, pinene 1%)
+  17, 9, 0.93
+  17, 14, 0.01
+  // patchouli (patchoulol 30%)
+  18, 12, 0.30
+  // rose (citronellol 30%, geraniol 20%, Phenylethyl alcohol 5%)
+  19, 10, 0.30
+  19, 17, 0.20
+  19, 16, 0.05
+  // sweet orange (limonene 85%, pinene 3%)
+  20, 9, 0.85
+  20, 14, 0.03
+  // vetiver (khusimol 35%)  
+  21, 13, 0.35
+}
+
+Records effect_categories(category_id, effect_type, category) {
+  1, 'physiological', 'Sleep'
+  2, 'physiological', 'Decongestant'
+  3, 'physiological', 'Warming'
+  4, 'physiological', 'Cooling'
+  5, 'physiological', 'Antimicrobial'
+  6, 'physiological', 'Digestive Relief'
+  7, 'emotional', 'calm'
+  8, 'emotional', 'uplift'
+  9, 'emotional', 'focus'
+  10, 'emotional', 'relax'
+  11, 'emotional', 'sensuality'
+  12, 'emotional', 'harmony'
+}
+
+Records category_scores(category_id, constituent_id, score) {
+  // sleep, linalool, +5
+  1, 1, 5
+  // sleep, cedrol, +4
+  1, 19, 4
+  // sleep, patcholol, +1
+  1, 12, 1
+
+  // decongestant
+  // 1,8-cineole +5
+  2, 3, 5
+  // methol/menthone +5
+  2, 4, 5
+
+  // warming
+  // cinnamaldehyde +5
+  3, 5, 5
+
+  // cooling
+  // menthol +5
+  4, 4, 5
+  // camphor +5
+  4, 18, 5
+
+  // antimicrobial
+  // terpinen-4-ol +5
+  5, 8, 5
+  // cinnamaldehyde +5
+  5, 5, 5
+  // geranial +5
+  5, 20, 5
+  // limonene +2
+  5, 9, 2
+  // 1,8-cineole +3
+  5, 3, 3
+  // citronellol +2
+  5, 10, 2
+
+  // digestive relief
+  // cinnamaldehyde +5
+  6, 5, 5
+  // menthol +5
+  6, 4, 5
+  // menthone +3
+  // 6, 
+  // chamomile +2
+  6, 
+
+}

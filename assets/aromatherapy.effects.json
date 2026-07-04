@@ -1,0 +1,67 @@
+{
+    "categories": [
+        "sleep",
+        "decongestant",
+        "warming",
+        "cooling",
+        "antimicrobial",
+        "digestiveRelief",
+
+        "calm",
+        "uplift",
+        "focus",
+        "relax",
+        "sensuality",
+        "harmony"
+    ],
+    "sleep": {
+        "linalool": 5,
+        "sesquiterpenes": 1
+    },
+    "decongestant": {
+        "1,8-cineole": 5,
+        "menthol": 5
+    },
+    "warming": {
+        "cinnamaldehyde": 5
+    },
+    "cooling": {
+        "menthol": 5
+    },
+    "antimicrobial": {
+        "terpinen-4-ol": 5,
+        "cinnamaldehyde": 5,
+        "limonene": 2,
+        "1,8-cineole": 3,
+        "citronellol": 2
+    },
+    "digestiveRelief": {
+        "cinnamaldehyde": 5,
+        "menthol": 5,
+        "menthone": 3,
+        "chamomile": 2
+    },
+    "calm": {
+        "linalool": 5,
+        "patchoulol": 1,
+        "khusimol": 5,
+        "pinene": 1
+    },
+    "uplift": {
+        "limonene": 5,
+        "benzyl acetate": 1
+    },
+    "focus": {
+        "1,8-cineole": 5,
+        "pinene": 4,
+        "limonene": 2
+    },
+    "relax": {
+        "linalool": 5,
+        "benzyl acetate": 3
+    },
+    "sensuality": {
+        "benzyle acetate": 5,
+        "phenylethyl alcohol": 1
+    }
+}

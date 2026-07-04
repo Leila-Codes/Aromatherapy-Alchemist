@@ -1,0 +1,96 @@
+[
+	{
+		"name": "Eucalyptus",
+		"effectCategories": { }
+	},
+	{
+		"name": "Lavender",
+		"effectCategories": { }
+	},
+	{
+		"name": "Lemon",
+		"effectCategories": { }
+	},
+	{
+		"name": "Tea Tree",
+		"effectCategories": { }
+	},
+	{
+		"name": "Bergamot",
+		"effectCategories": { }
+	},
+	{
+		"name": "Frankincense",
+		"effectCategories": { }
+	},
+	{
+		"name": "Peppermint",
+		"effectCategories": { }
+	},
+	{
+		"name": "Rosemary",
+		"effectCategories": { }
+	},
+	{
+		"name": "Geranium",
+		"effectCategories": { }
+	},
+	{
+		"name": "Ylang-Ylang",
+		"effectCategories": { }
+	},
+	{
+		"name": "Cedarwood",
+		"effectCategories": { }
+	},
+
+	{
+		"name": "Clary Sage",
+		"effectCategories": { }
+	},
+
+	{
+		"name": "Lemongrass",
+		"effectCategories": { }
+	},
+
+	{
+		"name": "Chamomile",
+		"effectCategories": { }
+	},
+
+	{
+		"name": "Cinnamon",
+		"effectCategories": { }
+	},
+
+	{
+		"name": "Cypress",
+		"effectCategories": { }
+	},
+
+	{
+		"name": "Grapefruit",
+		"effectCategories": { }
+	},
+
+	{
+		"name": "Patchouli",
+		"effectCategories": { }
+	},
+
+	{
+		"name": "Rose",
+		"effectCategories": { }
+	},
+
+	{
+		"name": "Sweet Orange",
+		"effectCategories": { }
+	},
+
+	{
+		"name": "Vetiver",
+		"effectCategories": { }
+	}
+]

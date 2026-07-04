@@ -1,35 +1,31 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
+import { Colors } from "@/constants/Colors";
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
+import { Tabs } from "expo-router";
 
-import { HapticTab } from '@/components/haptic-tab';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
-
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
-  return (
+const TabLayout = () => (
     <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-        tabBarButton: HapticTab,
-      }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="explore"
-        options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
-        }}
-      />
+        screenOptions={{
+            tabBarActiveBackgroundColor: Colors.tavern.background,
+            tabBarInactiveBackgroundColor: Colors.tavern.background,
+            tabBarActiveTintColor: Colors.tavern.tabTextActive,
+            tabBarInactiveTintColor: Colors.tavern.tabTextInactive,
+            headerShown: false,
+        }}>
+
+        <Tabs.Screen
+            name="index"
+            options={{
+                title: 'Oil List',
+                tabBarIcon: ({ color }) => <FontAwesome5 name="list" size={28} color={color} />
+            }} />
+
+        <Tabs.Screen
+            name="recipes"
+            options={{
+                title: 'Recipes',
+                tabBarIcon: ({ color }) => <FontAwesome5 name="flask" size={28} color={color} />
+            }} />
     </Tabs>
-  );
-}
+)
+
+export default TabLayout;

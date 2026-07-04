@@ -84,7 +84,6 @@ The final oil list for inclusion is:
 - Cinnamon 
 - Cypress 
 - Grapefruit 
-- Orange 
 - Patchouli 
 - Rose 
 - Sweet Orange

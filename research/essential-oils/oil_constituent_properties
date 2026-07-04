@@ -1,0 +1,79 @@
+-- eucaplyptus (1,8-cineole 86%, limonene 2%)
+1, 3, 0.86
+1, 9, 0.02
+
+-- lavender (linalool 28% + linalyl acetate 51% = 79%, 1,8-cineole 3%)
+2, 1, 0.79
+2, 3, 0.03
+
+-- lemon (limonene 72%, pinene 13%)
+3, 9, 0.72
+3, 14, 0.13
+
+-- tea tree (terpinene-4-ol 40%)
+4, 8, 0.40
+
+-- bergamot (limonene 81%, pinene 2%)
+5, 9, 0.81
+5, 14, 0.02
+
+-- frankincense (pinene 45%)
+6, 14, 0.45
+
+-- peppermint (menthol+menthone 41%+23%=64%, 1,8-cineole 5%)
+7, 6, 0.64
+7, 3, 0.05
+
+-- rosemary (camphor 27%, 1,8-cineole 20%, limonene 4%)
+8, 18, 0.27
+8, 3, 0.20
+8, 9, 0.04
+
+-- geranium (geraniol 28%, citronellol 24%, linalool 13%)
+9, 17, 0.28
+9, 10, 0.24
+9, 1, 0.13
+
+-- ylang-ylang (benzyl acetate 29%, linalool 23%)
+10, 15, 0.29
+10, 1, 0.23
+
+-- cedarwood (cedrol 20%)
+11, 19, 0.20
+
+-- clary sage (linalool 42%, geraniol 6%)
+12, 1, 0.42
+12, 17, 0.06
+
+-- lemongrass (geranial 75%, geraniol 3%)
+13, 20, 0.75
+13, 17, 0.03
+
+-- chamomile (khusimol 26%)
+14, 13, 0.26
+
+-- cinammon (Cinnamaldehyde 75% + cinnamyl acetate 5% = 80%)
+15, 7, 0.80
+
+-- cypress (pinene 49%, limonene 5%)
+16, 14, 0.49
+16, 9, 0.05
+
+-- grapefruit (limonene 93%, pinene 1%)
+17, 9, 0.93
+17, 14, 0.01
+
+-- patchouli (patchoulol 30%)
+18, 12, 0.30
+
+-- rose (citronellol 30%, geraniol 20%, Phenylethyl alcohol 5%)
+19, 10, 0.30
+19, 17, 0.20
+19, 16, 0.05
+
+-- sweet orange (limonene 85%, pinene 3%)
+20, 9, 0.85
+20, 14, 0.03
+
+-- vetiver (khusimol 35%)
+21, 13, 0.35
