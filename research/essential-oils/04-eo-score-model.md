@@ -110,17 +110,18 @@ Psychological or experiential effects that may influence a user's mood, stress o
 5. Antimicrobial - The oil can inhibit or kill certain micro-organisms such as bacteria, fungi or viruses. This can reduce risk of infection when applied on the skin or be used in surface cleaning applications.
     - Terpinen‑4‑ol (+5)
     - Cinnamaldehyde (+5)
-    - Geranial (+5)
     - Limonene (+2)
     - 1,8-Cineole (+3)
+    - Geraniol (+3)
     - Citronellol (+2)
+    - Geranial (+1)
 
 6. Digestive relief - An oil that may help alleviate ailments related to the digestive system, by relaxing it or alleviating nausea symptoms.
     - Cinnamaldehyde (+5)
     - Menthol (+5)
     - Menthone (+3)
     - Chamomile (+2)
-    - Geranial (+2)
+    - Geraniol (+2)
 
 ## Emotional Effect Categories
 1. Calm - Oils that, when used in aromatherapy may help reduce mental distress - tension, stress, racing thoughts.
@@ -146,6 +147,7 @@ Psychological or experiential effects that may influence a user's mood, stress o
 
 5. Sensuality - Oils that, when used in aromatherapy may offer a 'warm', heightened positive emotional or sensual mood boost.
     - Benzyl Acetate (+5)
+    - Geraniol (+2)
     - Phenylethyl alcohol (+1)
 
 6. Harmony - Similar to 'calm' but at a more emotional level. Offers a possible more even emotional range and reduction in mood swings.
