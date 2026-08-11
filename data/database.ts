@@ -1,13 +1,11 @@
 import * as SQLite from 'expo-sqlite';
 
-const DATABASE_NAME = 'aromatheray_alchemist.sqlite.sqlite'
-
-interface OilListing {
+export interface OilListing {
     oil_id: number;
     name: string;
 }
 
-interface OilWithMetadata extends OilListing {
+export interface OilWithMetadata extends OilListing {
     description?: string;
 }
 
@@ -27,42 +25,31 @@ type EmotionalEffect = 'Calm'
 | 'Sensuality'
 | 'Harmony'
 
-interface OilScoreCard {
+export type AromatherapyEffect = PhysiologicalEffect | EmotionalEffect;
+
+export interface OilScoreCard {
     oil_id: number;
     constituent_id: number;
     name: string;
     concentration: number;
-    category: PhysiologicalEffect | EmotionalEffect;
+    category: AromatherapyEffect;
     score: number;
 }
 
 class DatabaseService {
-    private static _instance: DatabaseService;
-    private db?: SQLite.SQLiteDatabase;
-
-    public static async getInstance() {
-        if (this._instance) return this._instance;
-
-        this._instance = new DatabaseService();
-        await this._instance.initialise();
-
-        return this._instance;
-    }
-
-    async initialise() {
-        this.db = await SQLite.openDatabaseAsync(DATABASE_NAME);
-    }
+    // private static _instance: DatabaseService;
+    constructor(private db: SQLite.SQLiteDatabase) { }
 
     public async getOilList() {
-        return await this.db?.getAllAsync<OilListing>(`SELECT oil_id, name FROM oils;`);
+        return await this.db.getAllAsync<OilListing>(`SELECT oil_id, name FROM oils`);
     }
 
     public async getOilMetadata(oil_id: number) {
-        return await this.db?.getFirstAsync<OilWithMetadata>(`SELECT oil_id, name, description FROM oils`);
+        return await this.db.getFirstAsync<OilWithMetadata>(`SELECT oil_id, name, description FROM oils WHERE oil_id = ?`, [ oil_id ]);
     }
 
     public async getOilEffects(oil_id: number) {
-        return await this.db?.getAllAsync<OilScoreCard>(
+        return await this.db.getAllAsync<OilScoreCard>(
             `SELECT * FROM oil_effects WHERE oil_id = ?`, 
             [oil_id]
         );
