@@ -1,4 +1,4 @@
-import { Recipe } from "@/data/database";
+import { Recipe, RecipeIngredient } from "@/data/database";
 import { useDatabase } from "@/data/DatabaseContext";
 import { useCallback, useEffect, useState } from "react";
 
@@ -22,4 +22,23 @@ const useRecipes = () => {
     return { recipes, refreshRecipes }
 }
 
-export default useRecipes;
+const useRecipeIngredients = (recipe_id: number) => {
+    const database = useDatabase();
+
+    const [ ingredients, setIngredients ] = useState<RecipeIngredient[]>([]);
+
+    const loadIngredients = async () => {
+        setIngredients(await database?.listRecipeIngredients(recipe_id) ?? []);
+    }
+
+    useEffect(() => {
+        loadIngredients();
+    }, [ recipe_id ]);
+
+    return ingredients;
+}
+
+export {
+    useRecipeIngredients, useRecipes
+};
+

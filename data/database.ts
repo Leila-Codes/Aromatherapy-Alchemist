@@ -50,6 +50,14 @@ export interface Recipe {
     name: string;
 }
 
+export interface RecipeIngredient {
+    ingredient_id: number;
+    oil_id: number;
+    drops: number;
+    recipe_id: number;
+    name: string
+}
+
 class DatabaseService {
     // private _oilsByEffectStmt: SQLite.SQLiteStatement;
 
@@ -116,6 +124,16 @@ class DatabaseService {
         return await this.db.getAllAsync<Recipe>(
             `SELECT * FROM recipes`
         )
+    }
+
+    public async listRecipeIngredients(recipe_id: number) {
+        return await this.db.getAllAsync<RecipeIngredient>(
+            `SELECT recipe_ingredients.*, oils.name
+            FROM recipe_ingredients
+            INNER JOIN oils ON recipe_ingredients.oil_id = oils.oil_id
+            WHERE recipe_id = ?`,
+            [ recipe_id ]
+        );
     }
 }
 
