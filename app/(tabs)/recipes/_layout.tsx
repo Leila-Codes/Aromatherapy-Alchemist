@@ -1,13 +1,9 @@
-import { Colors } from "@/constants/Colors";
 import { Stack } from "expo-router";
-import { View } from "react-native";
 
 const RecipesLayout = () => (
-    <View style={{ flexGrow: 1, backgroundColor: Colors.tavern.background, paddingTop: 50 }}>
-        <Stack screenOptions={{ header: () => <></> }}>
-            <Stack.Screen name="index" />
-        </Stack>
-    </View>
+    <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="index" />
+    </Stack>
 )
 
 export default RecipesLayout;

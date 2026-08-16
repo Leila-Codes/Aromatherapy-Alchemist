@@ -12,7 +12,7 @@ Reviewing oil's constituents, a few dominant constituents appear most often acro
         - Tea Tree (weak)
         - Lavender (weak)
         - Peppermint (weak)
-        - Rosemary (moderate)n
+        - Rosemary (moderate)
 
 2. Limonene
     - "Citrus" Scents

@@ -11,19 +11,9 @@ export interface OilWithMetadata extends OilListing {
 
 type EffectType = 'physiological' | 'emotional';
 
-type PhysiologicalEffect = 'Sleep' 
-    | 'Decongestant' 
-    | 'Warming'
-    | 'Cooling'
-    | 'Antimicrobial'
-    | 'Digestive Relief';
+type PhysiologicalEffect = 'Sleep' | 'Decongestant' | 'Warming' | 'Cooling' | 'Antimicrobial' | 'Digestive Relief'
 
-type EmotionalEffect = 'Calm'
-| 'Uplift'
-| 'Focus'
-| 'Relax'
-| 'Sensuality'
-| 'Harmony'
+type EmotionalEffect = 'Calm' | 'Uplift' | 'Focus' | 'Relax' | 'Sensuality' | 'Harmony';
 
 export type AromatherapyEffect = PhysiologicalEffect | EmotionalEffect;
 
@@ -33,26 +23,99 @@ export interface OilScoreCard {
     name: string;
     concentration: number;
     category: AromatherapyEffect;
-    score: number;
+    relative_score: number;
+}
+
+export interface SearchResult {
+    oid: number; // object_id (oil_id or category_id)
+    name: string; // oil_name or category_name
+    completion_type: 'oil' | 'category'
+}
+
+export interface OilRecommendation {
+    oil_id: number;
+    oil_name: string;
+    category: AromatherapyEffect;
+    relative_score: number;
+}
+
+export interface EffectCategoryListing {
+    category_id: number;
+    effect_type: EffectType;
+    category: AromatherapyEffect;
+}
+
+export interface Recipe {
+    recipe_id: number;
+    name: string;
 }
 
 class DatabaseService {
-    // private static _instance: DatabaseService;
-    constructor(private db: SQLite.SQLiteDatabase) { }
+    // private _oilsByEffectStmt: SQLite.SQLiteStatement;
+
+    constructor(private db: SQLite.SQLiteDatabase) {
+        // this._oilsByEffectStmt = db.prepareAsync(``)
+
+     }
+
 
     public async getOilList() {
         return await this.db.getAllAsync<OilListing>(`SELECT oil_id, name FROM oils`);
     }
 
     public async getOilMetadata(oil_id: number) {
-        return await this.db.getFirstAsync<OilWithMetadata>(`SELECT oil_id, name, description FROM oils WHERE oil_id = ?`, [ oil_id ]);
+        return await this.db.getFirstAsync<OilWithMetadata>(`SELECT oil_id, name, description FROM oils WHERE oil_id = ?`, [oil_id]);
     }
 
     public async getOilEffects(oil_id: number) {
         return await this.db.getAllAsync<OilScoreCard>(
-            `SELECT * FROM oil_effects WHERE oil_id = ?`, 
+            `SELECT * FROM oil_effects WHERE oil_id = ?`,
             [oil_id]
         );
+    }
+
+    public async oilCountForEffect(category_id: number) {
+        return await this.db.getFirstAsync<{ count: number }>(
+            `SELECT COUNT(oil_id) as count FROM search_by_effect WHERE category_id = ?`,
+            [category_id]
+        )
+    }
+
+    public async search(term: string) {
+        const sanitisedTerm = term.replaceAll('%', '') + '%';
+
+        return await this.db.getAllAsync<SearchResult>(
+            `SELECT category_id as oid, category as name, 'category' as completion_type
+                FROM effect_categories
+                WHERE effect_categories.category LIKE ?
+            UNION ALL
+            SELECT oil_id as oid, name as name, 'oil' as completion_type
+                FROM oils
+                WHERE name LIKE ?`,
+            [sanitisedTerm, sanitisedTerm]
+        );
+    }
+
+    public async oilsForEffect(category_id: number) {
+        this.db.prepareAsync
+        return await this.db.getAllAsync<OilRecommendation>(
+            `SELECT oil_id, oil_name, category, relative_score 
+            FROM search_by_effect 
+            WHERE category_id = ?;`,
+            [ category_id ]
+        )
+    }
+
+    public async listAllCategories() {
+        return await this.db.getAllAsync<EffectCategoryListing>(
+            `SELECT * FROM effect_categories`            
+        )
+    }
+
+    public async getMyRecipes() {
+        return await this.db.getAllAsync<Recipe>(
+            `SELECT * FROM recipes`
+        )
     }
 }
 
