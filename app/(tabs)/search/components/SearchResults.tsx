@@ -1,5 +1,5 @@
-import useSearch from "@/hooks/useSearch";
-import { StyleSheet, View } from "react-native";
+import { SearchResult } from "@/data/database";
+import { StyleSheet, Text, View } from "react-native";
 import ResultCard from "./ResultCard/ResultCard";
 
 export interface DropdownSelection {
@@ -8,21 +8,27 @@ export interface DropdownSelection {
 }
 
 interface SearchResultsProps {
-    searchTerm: string;
+    results?: SearchResult[]
+    onResultSelect?: (result: SearchResult) => void
 }
 
 const SearchResults = ({
-    searchTerm,
+    results = [],
+    onResultSelect,
 }: Readonly<SearchResultsProps>) => {
-    const results = useSearch(searchTerm);
 
     return (
         <View style={styles.dropdownContainer}>
             {results.map((result) => (
                 <ResultCard
                     key={`${result.completion_type}-${result.oid}`}
+                    onPress={onResultSelect}
                     result={result} />
             ))}
+
+            {results.length < 1
+                ? <Text>No Results Found</Text>
+                : null}
         </View>
     );
 }

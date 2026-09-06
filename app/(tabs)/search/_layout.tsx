@@ -11,8 +11,8 @@ const SearchHeader = () => (
 
 const SearchLayout = () => (
     <Stack
-        screenOptions={{ header: SearchHeader }}>
-        <Stack.Screen name="search" />
+        screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="index" />
     </Stack>
 )
 

@@ -1,25 +1,42 @@
+import ConfirmModal from "@/components/modals/ConfirmModal";
 import SpinnerInput from "@/components/SpinnerInput";
 import { RecipeIngredient } from "@/data/database";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import { useState } from "react";
-import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import IconCard from "./IconCard";
 
 interface IngredientEditorProps {
     ingredient: RecipeIngredient
+    onModified: (ingredient: RecipeIngredient) => void
+    onRemoved: (ingredient: RecipeIngredient) => void
 }
 
 const IngredientEditor = ({
-    ingredient
+    ingredient,
+    onModified,
+    onRemoved
 }: Readonly<IngredientEditorProps>) => {
-    const [drops, setDrops] = useState(ingredient.drops);
+    // const [drops, setDrops] = useState(ingredient.drops);
+    const [requiresConfirmation, setRequiresConfirmation] = useState(false);
 
     const promptForRemoval = () => {
-        Alert.alert('Are you sure?', `Are you sure you want to remove ${ingredient.name} Oil from your recipe?`)
+        setRequiresConfirmation(true)
+    }
+
+    const onDropChange = (newDropCount: number) => {
+        onModified({ ...ingredient, drops: newDropCount });
     }
 
     return (
         <View style={styles.container}>
+            <ConfirmModal
+                visible={requiresConfirmation}
+                title="Are you sure?"
+                description={`Are you sure you want to remove ${ingredient.name} Oil from your recipe?`}
+                onConfirm={() => {onRemoved(ingredient); setRequiresConfirmation(false)}}
+                onCancel={() => setRequiresConfirmation(false)} />
+
             <TouchableOpacity style={styles.deleteButton} onPress={promptForRemoval}>
                 <FontAwesome5 size={26} name="times-circle" color="red" />
             </TouchableOpacity>
@@ -34,8 +51,8 @@ const IngredientEditor = ({
 
             <SpinnerInput
                 fontSize={28}
-                value={drops}
-                onValueChange={setDrops} />
+                value={ingredient.drops}
+                onValueChange={onDropChange} />
         </View>
     )
 };

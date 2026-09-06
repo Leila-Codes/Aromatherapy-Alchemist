@@ -1,16 +1,39 @@
-import { Alert, StyleSheet, Text, View } from "react-native";
+import { SearchResult } from "@/data/database";
+import { useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
+import AddOilModal from "../modals/AddOilModal";
 import IconCard from "./IconCard";
 
-const IngredientSelector = () => (
-    <View style={styles.container}>
-        <IconCard
-            iconName="plus-circle"
-            color="#2285cb"
-            onPress={() => Alert.alert('Adding new...')} />
+interface IngredientSelectorProps {
+    excludeOilIds: number[]
+    onOilSelection: (result: SearchResult) => void
+}
 
-        <Text style={styles.title}>Add New</Text>
-    </View>
-);
+const IngredientSelector = ({
+    excludeOilIds,
+    onOilSelection
+}: Readonly<IngredientSelectorProps>) => {
+    const [requestingNew, setRequestingNew] = useState(false);
+
+    return (
+        <>
+            <AddOilModal
+                excludeOilIds={excludeOilIds}
+                visible={requestingNew}
+                onCancel={() => setRequestingNew(false)}
+                onSelect={(selection) => { setRequestingNew(false); onOilSelection(selection) }} />
+
+            <View style={styles.container}>
+                <IconCard
+                    iconName="plus-circle"
+                    color="#2285cb"
+                    onPress={() => setRequestingNew(true)} />
+
+                <Text style={styles.title}>Add New</Text>
+            </View>
+        </>
+    )
+};
 
 const styles = StyleSheet.create({
     container: {

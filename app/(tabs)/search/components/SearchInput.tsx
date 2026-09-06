@@ -27,17 +27,30 @@ const SearchInput = ({
 
     const clearSearch = useCallback(() => {
         onValueChange("");
+
+        // handleSearchTap();
     }, [onValueChange])
+
+    // const handleSearchTap = () => {
+    //     if (inputRef.current?.isFocused()) {
+    //         inputRef.current.blur();
+    //         setTimeout(() => {
+    //             inputRef.current?.focus();
+    //         }, 100)
+    //     }
+    // }
 
     return (
         <View style={styles.container}>
             <TextInput
+                style={styles.textInput}
                 ref={inputRef}
                 autoCorrect={false}
                 autoFocus
                 clearButtonMode="never"
                 placeholder="Search for Oils, Effects and more..."
                 value={value}
+                // onPressIn={handleSearchTap}
                 onChangeText={(term) => {onValueChange(term)}} />
 
             <TouchableOpacity style={styles.clearButton} onPress={() => clearSearch()}>
@@ -58,10 +71,15 @@ const styles = StyleSheet.create({
     },
     clearButton: {
         verticalAlign: 'middle',
-        margin: 1,
+        margin: 5,
         backgroundColor: '#ffffff40',
+        // backgroundColor: '#f00
         borderRadius: '50%',
         color: Colors.tavern.text
+    },
+    textInput: {
+        flexGrow: 1,
+        backgroundColor: Colors.tavern.background,
     }
 })
 

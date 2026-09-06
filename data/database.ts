@@ -73,7 +73,7 @@ class DatabaseService {
     constructor(private db: SQLite.SQLiteDatabase) {
         // this._oilsByEffectStmt = db.prepareAsync(``)
 
-     }
+    }
 
 
     public async getOilList() {
@@ -98,19 +98,37 @@ class DatabaseService {
         )
     }
 
-    public async search(term: string) {
+    public async searchByOilName(term: string) {
         const sanitisedTerm = term.replaceAll('%', '') + '%';
 
-        return await this.db.getAllAsync<SearchResult>(
-            `SELECT category_id as oid, category as name, 'category' as completion_type
-                FROM effect_categories
-                WHERE effect_categories.category LIKE ?
-            UNION ALL
+        return await this.db.getAllAsync<SearchResult>(`
             SELECT oil_id as oid, name as name, 'oil' as completion_type
-                FROM oils
-                WHERE name LIKE ?`,
-            [sanitisedTerm, sanitisedTerm]
-        );
+            FROM oils
+            WHERE name LIKE ?`,
+            [sanitisedTerm]
+        )
+    }
+
+    public async searchByEffectName(term: string) {
+        const sanitisedTerm = term.replaceAll('%', '') + '%';
+
+        return await this.db.getAllAsync<SearchResult>(`
+            SELECT category_id as oid, category as name, 'category' as completion_type
+            FROM effect_categories
+            WHERE effect_categories.category LIKE ?`,
+            [sanitisedTerm]
+        )
+    }
+
+    public async search(term: string, includeCategories = true) {
+        const searchResults: SearchResult[] = [];
+
+        if (includeCategories) 
+            searchResults.push(...(await this.searchByEffectName(term)))
+        
+        searchResults.push(...(await this.searchByOilName(term)));
+
+        return searchResults;
     }
 
     public async oilsForEffect(category_id: number) {
@@ -119,13 +137,13 @@ class DatabaseService {
             `SELECT oil_id, oil_name, category, relative_score 
             FROM search_by_effect 
             WHERE category_id = ?;`,
-            [ category_id ]
+            [category_id]
         )
     }
 
     public async listAllCategories() {
         return await this.db.getAllAsync<EffectCategoryListing>(
-            `SELECT * FROM effect_categories`            
+            `SELECT * FROM effect_categories`
         )
     }
 
@@ -141,7 +159,7 @@ class DatabaseService {
             FROM recipe_ingredients
             INNER JOIN oils ON recipe_ingredients.oil_id = oils.oil_id
             WHERE recipe_id = ?`,
-            [ recipe_id ]
+            [recipe_id]
         );
     }
 

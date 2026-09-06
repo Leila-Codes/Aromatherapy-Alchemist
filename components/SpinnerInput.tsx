@@ -50,7 +50,11 @@ const SpinnerInput = ({
             <Text style={{ fontSize }}>{value}</Text>
 
             <Pressable
-                style={styles.actionButton}
+                style={
+                    value >= maxValue
+                        ? { ...styles.actionButton, ...styles.disabledActionButton }
+                        : styles.actionButton
+                }
                 onPress={increment}
                 disabled={value >= maxValue}>
 

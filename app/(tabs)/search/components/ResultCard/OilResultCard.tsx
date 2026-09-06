@@ -7,7 +7,15 @@ import { useRouter } from "expo-router";
 import { Text, View } from "react-native";
 import ResultCardStyles from "./ResultCard.styles";
 
-const OilResultCard = ({ result }: Readonly<{ result: SearchResult }>) => {
+interface OilResultsCardProps {
+    result: SearchResult;
+    onPress?: (result: SearchResult) => void;
+}
+
+const OilResultCard = ({
+    result,
+    onPress
+}: Readonly<OilResultsCardProps>) => {
     const router = useRouter();
     const oilEffects = useOilEffects(result.oid);
 
@@ -19,7 +27,10 @@ const OilResultCard = ({ result }: Readonly<{ result: SearchResult }>) => {
     }
 
     return (
-        <PlatformPressable style={ResultCardStyles.cardContainer} onPress={goToOilPage}>
+        <PlatformPressable
+            style={ResultCardStyles.cardContainer}
+            onPress={() => onPress ? onPress(result) : goToOilPage()}
+        >
             <FontAwesome5
                 name="vial"
                 size={28}

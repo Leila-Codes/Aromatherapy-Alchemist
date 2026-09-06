@@ -35,10 +35,11 @@ const useRecipeIngredients = (recipe_id: number) => {
         loadIngredients();
     }, [ recipe_id ]);
 
-    return ingredients;
+    return { ingredients, setIngredients };
 }
 
 export {
-    useRecipeIngredients, useRecipes
+    useRecipeIngredients,
+    useRecipes
 };
 

@@ -1,4 +1,5 @@
 import { Colors } from "@/constants/Colors";
+import useSearch from "@/hooks/useSearch";
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import SearchInput from "./components/SearchInput";
@@ -7,6 +8,9 @@ import SearchShortcuts from "./components/SearchShortcuts";
 
 const SearchPage = () => {
     const [searchTerm, setSearchTerm] = useState("");
+    
+    const results = useSearch(searchTerm ?? '');
+
     return (
         <View style={styles.searchContainer}>
             <SearchInput
@@ -15,7 +19,7 @@ const SearchPage = () => {
 
             {searchTerm.length === 0
                 ? <SearchShortcuts />
-                : <SearchResults searchTerm={searchTerm} />}
+                : <SearchResults results={results} />}
         </View>
     )
 }
