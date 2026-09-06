@@ -58,6 +58,15 @@ export interface RecipeIngredient {
     name: string
 }
 
+export type RiskType = 'Irritant' | 'Flammable' | 'Environmental Hazard' | 'Health Hazard' | 'Endocrine Disruptor' | 'Pet Toxicity';
+
+export interface RiskEntry {
+    risk_id: number;
+    risk_type: RiskType;
+    description: string;
+    mitigation: string;
+}
+
 class DatabaseService {
     // private _oilsByEffectStmt: SQLite.SQLiteStatement;
 
@@ -134,6 +143,19 @@ class DatabaseService {
             WHERE recipe_id = ?`,
             [ recipe_id ]
         );
+    }
+
+    public async listOilRisks(oil_id: number) {
+        return await this.db.getAllAsync<RiskEntry>(
+            `SELECT DISTINCT hr.*
+            FROM oils
+            inner join main.oil_content oc on oils.oil_id = oc.oil_id
+            inner join main.constituent_risks cr on oc.constituent_id = cr.constituent_id
+            inner join main.health_risks hr ON cr.risk_id = hr.risk_id
+            WHERE oils.oil_id = ?
+            ORDER BY hr.risk_id;`,
+            [oil_id]
+        )
     }
 }
 

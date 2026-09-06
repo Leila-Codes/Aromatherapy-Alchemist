@@ -1,4 +1,5 @@
 import { RecipeIngredient } from "@/data/database";
+import useOilEffects from "@/hooks/useOilEffects";
 import { StyleSheet, View } from "react-native";
 import OilEffectScoreCard from "../cards/OilEffectScoreCard";
 
@@ -9,19 +10,16 @@ interface EffectSummaryProps {
 const EffectSummary = ({
     ingredients
 }: Readonly<EffectSummaryProps>) => {
+    const combinedEffects = useOilEffects(ingredients[0]?.oil_id) ?? [];
+
     return (
         <View style={styles.container}>
-            <OilEffectScoreCard
-                effect="Calm"
-                score={2} />
-
-            <OilEffectScoreCard
-                effect="Focus"
-                score={1} />
-
-            <OilEffectScoreCard
-                effect="Relax"
-                score={4} />
+            {combinedEffects.map(efo => (
+                <OilEffectScoreCard
+                    key={efo.category}
+                    effect={efo.category}
+                    score={efo.relative_score * ingredients[0]?.drops} />
+            ))}
         </View>
     )
 };

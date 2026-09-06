@@ -1,11 +1,12 @@
 import OilEffectScoreCard from "@/components/cards/OilEffectScoreCard";
+import OilRiskCard from "@/components/cards/OilRiskCard";
 import { Colors } from "@/constants/Colors";
-import { OilWithMetadata } from "@/data/database";
 import { useDatabase } from "@/data/DatabaseContext";
 import useOilEffects from "@/hooks/useOilEffects";
+import useOilMetadata from "@/hooks/useOilMetadata";
+import useOilRisks from "@/hooks/useOilRisks";
 import { useLocalSearchParams } from "expo-router";
-import { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { FlatList, StyleSheet, Text, View } from "react-native";
 import { OilDetailRouteParams } from "./_layout";
 
 
@@ -14,18 +15,9 @@ const EssentialOilDetailPage = () => {
     const { oil_id } = useLocalSearchParams<OilDetailRouteParams>();
     const oilID = Number.parseInt(oil_id);
 
-    const [metadata, setMetadata] = useState<OilWithMetadata | null>(null);
+    const metadata = useOilMetadata(oilID);
     const oilEffects = useOilEffects(oilID);
-
-    const loadOilData = async () => {
-        if (!database) return null;
-
-        setMetadata(await database.getOilMetadata(oilID));
-    }
-
-    useEffect(() => {
-        loadOilData();
-    }, [database, oil_id])
+    const oilRisks = useOilRisks(oilID);
 
     if (isNaN(oilID) || !metadata) return null;
 
@@ -35,12 +27,23 @@ const EssentialOilDetailPage = () => {
                 {metadata.description}
             </Text>
 
-            <View style={styles.oilEffectContainer}>
-                {oilEffects?.map((effect) => (
-                    <OilEffectScoreCard 
+            <FlatList
+                style={styles.effectsContainer}
+                numColumns={3}
+                data={oilEffects}
+                renderItem={({ item: effect }) => (
+                    <OilEffectScoreCard
                         key={`${effect.category}-${effect.relative_score}`}
                         effect={effect.category}
-                        score={effect.relative_score}  />
+                        score={effect.relative_score} />
+                )} />
+
+
+            <View style={styles.riskContainer}>
+                {oilRisks?.map((risk) => (
+                    <OilRiskCard
+                        key={`${oilID}-${risk.risk_id}`}
+                        riskInfo={risk} />
                 ))}
             </View>
         </View>
@@ -51,17 +54,19 @@ const styles = StyleSheet.create({
     infoContainer: {
         backgroundColor: Colors.tavern.background,
         flexGrow: 1,
-        padding: 5
+        padding: 5,
     },
     descriptionText: {
         fontSize: 18,
         color: Colors.tavern.text,
     },
-    oilEffectContainer: {
-        flex: 3,
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        justifyContent: 'flex-start'
+    effectsContainer: {
+        flexShrink: 1
+    },
+    riskContainer: {
+        flexGrow: 1,
+        display: 'flex',
+        flexDirection: 'column'
     }
 })
 
